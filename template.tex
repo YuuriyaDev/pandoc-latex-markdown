@@ -1,0 +1,162 @@
+\documentclass[a4,11pt]{$documentclass$}
+\usepackage{graphics}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{tgpagella}
+\usepackage{microtype}
+\usepackage{booktabs}
+
+\usepackage{upquote}
+\usepackage[utf8]{inputenc}
+\usepackage{eurosym}
+
+\usepackage{upquote}
+\usepackage[utf8]{inputenc}
+\usepackage{eurosym}
+
+\usepackage{graphicx}
+\usepackage{float}
+\restylefloat{figure}
+
+\usepackage[unicode=true]{hyperref}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={$author-meta$},
+            pdftitle={$title-meta$},
+            colorlinks=true,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
+            pdfborder={0 0 0}}
+\urlstyle{same}
+
+$if(links-as-notes)$
+    % Make links footnotes instead of hotlinks:
+    \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+
+$if(strikeout)$
+    \usepackage[normalem]{ulem}
+    % avoid problems with \sout in headers with hyperref:
+    \pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+
+$if(numbersections)$
+$else$
+    \setcounter{secnumdepth}{0}
+$endif$
+
+\usepackage{enumerate}
+
+$if(title)$
+\title{$title$}
+$endif$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+\date{$date$}
+
+% Header and Footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\pagenumbering{arabic}
+\chead{}
+\rhead{\itshape{\nouppercase{\leftmark}}}
+$if(version)$
+\lfoot{v$version$}
+$endif$
+\cfoot{}
+\rfoot{\thepage}
+
+% Judul Bab
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]
+    {\Large\bfseries}
+    {\MakeUppercase{\chaptertitlename}\hspace{5pt}\thechapter\hspace{10pt}{\Huge{\textbar}}\hspace{5pt}}
+    {0pt}
+    {\Huge\bfseries}[\vspace{1ex}\titlerule]
+
+$if(title)$
+\title{$title$}
+$endif$
+
+\author{$for(author)$$author$$sep$ \and $endfor$}
+\date{$date$}
+
+$for(header-includes)$
+    $header-includes$
+$endfor$
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+$if(highlighting-macros)$
+   $highlighting-macros$
+$endif$
+
+$if(graphics)$ 
+    \usepackage{graphicx}
+    % Redefine \includegraphics so that, unless explicit options are
+    % given, the image width will not exceed the width or the height of the page.
+    % Images get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\ScaleWidthIfNeeded{%
+     \ifdim\Gin@nat@width>\linewidth
+        \linewidth
+      \else
+        \Gin@nat@width
+      \fi
+    }
+    \def\ScaleHeightIfNeeded{%
+      \ifdim\Gin@nat@height>0.9\textheight
+        0.9\textheight
+      \else
+        \Gin@nat@width
+      \fi
+    }
+    \makeatother
+
+    \setkeys{Gin}{width=\ScaleWidthIfNeeded,height=\ScaleHeightIfNeeded,keepaspectratio}%
+$endif$
+
+\begin{document}
+
+\begin{titlepage}
+    \pagenumbering{gobble}
+    \begin{center}
+        \begin{figure}
+            \begin{center}
+            % Logo
+                \includegraphics[width=2.5cm]{$logo$}
+            \end{center}
+        \end{figure}
+        \vspace*{0cm}
+        \textbf{$campus$} \\
+        \textbf{$title$} \\[1.0cm]
+        \vspace*{2.5cm}
+        \textbf{$type$} \\
+        \vspace*{3 cm}       
+        \textbf{$author$} \\
+        \textbf{$studentnumber$} \\
+        \vspace*{5.0cm}
+        \textbf{
+            FAKULTAS $faculty$ \\
+            PROGRAM STUDI $major$ \\
+            $city$
+        }
+    \end{center}
+\end{titlepage}
+
+$for(include-before)$
+    $include-before$
+$endfor$
+
+$if(toc)$
+{
+    \hypersetup{linkcolor=black}
+    \tableofcontents
+}
+$endif$
+
+\newpage
+\pagenumbering{arabic}
+
+$body$
+\end{document}
